@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('employees', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('role'); // Ex: Cabeleireiro, Recepcionista, Administrador
+            $table->string('pin_code', 6)->nullable(); // Alternativa caso a IA falhe
+            $table->text('facial_features_token')->nullable(); // Vetor da face para validação
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('employees');
+    }
+};
